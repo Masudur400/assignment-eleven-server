@@ -42,6 +42,12 @@ app.post('/books',async(req, res)=>{
     res.send(result);
 })
 
+app.get('/books',async(req, res)=>{
+    const cursor = booksCollection.find();
+    const result = cursor.toArray();
+    res.send(result);
+})
+
 
 
 
@@ -66,9 +72,9 @@ run().catch(console.dir);
 
 
 app.get('/',(req, res)=>{
-    res.send('server is running......')
+    res.send('book server is running......')
 })
 
 app.listen(port, ()=>{
-    console.log(`server is running on port: ${port}`)
+    console.log(`book server is running on port: ${port}`)
 })
