@@ -44,7 +44,7 @@ app.post('/books',async(req, res)=>{
 
 app.get('/books',async(req, res)=>{
     const cursor = booksCollection.find();
-    const result = cursor.toArray();
+    const result = await cursor.toArray();
     res.send(result);
 })
 
