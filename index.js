@@ -38,7 +38,7 @@ async function run() {
 
         app.post('/books', async (req, res) => {
             const addBook = req.body;
-            console.log(addBook);
+              
             const result = await booksCollection.insertOne(addBook);
             res.send(result);
         })
@@ -68,19 +68,42 @@ async function run() {
             const filter = { _id: new ObjectId(id) };
             const options = { upsert: true };
             const updatedBook = req.body;
-            const  book = {
+            const book = {
                 $set: {
-                    name:updatedBook.name,
-                    authorName:updatedBook.authorName,
-                    rating:updatedBook.rating,
-                    category:updatedBook.category,
-                    photo:updatedBook.photo
+                    name: updatedBook.name,
+                    authorName: updatedBook.authorName,
+                    rating: updatedBook.rating,
+                    category: updatedBook.category,
+                    photo: updatedBook.photo
                 }
             }
-            const result = await booksCollection.updateOne(filter,book,options)
+            const result = await booksCollection.updateOne(filter, book, options)
             res.send(result);
         })
 
+
+        app.patch('/books/:id', async(req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const updatedBook = req.body;
+            const book = {
+                $set: { 
+                    name:updatedBook.name,
+                    authorName:updatedBook.authorName,
+                    quantity:updatedBook.quantity,
+                    shortDescription:updatedBook.shortDescription,
+                    rating:updatedBook.rating, 
+                    category:updatedBook.category,
+                    photo:updatedBook.photo,
+                    isSold:true,
+                    buyersEmail:updatedBook.buyersEmail,
+                    borrowedBooks:updatedBook.borrowedBooks
+                }
+            }
+            const result = await booksCollection.updateOne(filter, book)
+            res.send(result)
+
+        })
 
 
 
